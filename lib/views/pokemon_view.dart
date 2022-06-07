@@ -334,6 +334,7 @@ class _PokemonInfoRow extends StatelessWidget {
             child: Row(
               children: [
                 Text(value,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                   ),
