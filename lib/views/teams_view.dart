@@ -147,21 +147,21 @@ class _TeamsListTile extends StatelessWidget {
               itemBuilder: (context, teamDataIndex){
                 final pokemonBloc = BlocProvider.of<PokemonBloc>(context, listen: false);
                 return ListTile(
-                  title: Text('#${index+1} / #${teamDataIndex+1} - ${pokemonBloc.state.pokemonData![teamDataIndex].name}',
+                  title: Text('#${index+1} / #${teamDataIndex+1} - ${pokemonBloc.state.pokemonData![teamIds[teamDataIndex]-1].name}',
                     style: const TextStyle(
                       color: Colors.black,
                     ),
                     softWrap: true, 
                   ),
                   onTap: (){
-                    PokemonService.currentPokemon=pokemonBloc.state.pokemonData![teamDataIndex];
+                    PokemonService.currentPokemon=pokemonBloc.state.pokemonData![teamIds[teamDataIndex]-1];
                     Navigator.pushNamed(context, 'pokemon');
                   },
                   trailing: SizedBox(
                     height: 30,
                     width: 30,
                     child: CachedNetworkImage(
-                      imageUrl: 'https://cdn.traction.one/pokedex/pokemon/${pokemonBloc.state.pokemonData![teamDataIndex].id}.png',
+                      imageUrl: 'https://cdn.traction.one/pokedex/pokemon/${pokemonBloc.state.pokemonData![teamIds[teamDataIndex]-1].id}.png',
                     ),
                   ),
                 );
