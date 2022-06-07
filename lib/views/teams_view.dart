@@ -2,10 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poketest/bloc/blocs.dart';
-import 'package:poketest/services/services.dart';
 
-import '../models/models.dart';
+import '../bloc/blocs.dart';
+import '../services/services.dart';
 
 class TeamsView extends StatelessWidget {
    

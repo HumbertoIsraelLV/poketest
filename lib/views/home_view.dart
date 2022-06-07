@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poketest/components/show_update_name_alert.dart';
+import 'package:flutter/material.dart';
 
-import '../services/services.dart';
-import '../models/models.dart';
-import '../components/components.dart';
 import '../bloc/blocs.dart';
+import '../components/components.dart';
+import '../models/models.dart';
+import '../services/services.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);

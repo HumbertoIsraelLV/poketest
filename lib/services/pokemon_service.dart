@@ -9,12 +9,6 @@ import '../models/models.dart';
 
 class PokemonService {
 
-  static Map<String, List<int>> teamsIds = {};
-
-  static Map<String, List<PokemonModel>> teamsData = {};
-
-  static Map<int, PokemonModel?> pokemonData = {};
-
   static late PokemonModel currentPokemon; 
 
   static Map<String, Color> colors = {
@@ -67,37 +61,6 @@ class PokemonService {
       log(e.toString());
     }
     return {};
-  }
-  
-  static Future<Map<String, List<PokemonModel>>> readPokemonTeamsData() async {
-    try {
-      if(teamsIds.isEmpty) await readPokemonTeamsIds();
-      for(String teamName in teamsIds.keys){
-        List<PokemonModel> pokemonList = [];
-        for(int id in teamsIds[teamName]!){
-          final auxPokemon = await readPokemonById(id);
-          if(auxPokemon!=null) pokemonList.add(auxPokemon);
-        }
-        teamsData[teamName]=pokemonList;
-      } 
-      return teamsData;
-    } catch (e) {
-      log(e.toString());
-    }
-    return {};
-  }
-
-  static Future<bool> deletePokemonTeam(String teamName) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      teamsData.removeWhere((key, value) => key==teamName);
-      teamsIds.removeWhere((key, value) => key==teamName);
-      prefs.setString('teams', json.encode(teamsIds));
-      return true;
-    } catch (e) {
-      log(e.toString());
-    }
-    return false;
   }
 
 }

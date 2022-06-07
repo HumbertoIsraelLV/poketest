@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:poketest/bloc/blocs.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 
-// import '../services/services.dart';
+import '../bloc/blocs.dart';
 
 showUpdateNameAlert(BuildContext context) async {
   final formKey = GlobalKey<FormBuilderState>();
@@ -58,13 +55,7 @@ showUpdateNameAlert(BuildContext context) async {
                       if (formKey.currentState!.validate()) {
                         BlocProvider.of<UserBloc>(context, listen: false)
                           .add(UpdateUser(formKey.currentState!.value['name']));
-                        // if(PokemonService.teamsIds.isEmpty) await PokemonService.readPokemonTeamsIds();
-                        // final prefs = await SharedPreferences.getInstance();
-                        // PokemonService.teamsIds[formKey.currentState!.value['name']]=gridController.value.selectedIndexes.map((item) => item+1).toList();
-                        // await prefs.setString('teams', json.encode(PokemonService.teamsIds));
                         Navigator.pop(context);
-                      } else {
-                        print("validation failed");
                       }
                     },
                     child: const Text('Update'),

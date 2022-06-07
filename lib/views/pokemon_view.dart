@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:poketest/services/pokemon_service.dart';
-import 'package:poketest/services/services.dart';
+
+import '../services/services.dart';
 
 class PokemonView extends StatelessWidget {
    
@@ -340,34 +340,6 @@ class _PokemonInfoRow extends StatelessWidget {
                 ),
                 (valueWidget!=null) ?valueWidget! :const SizedBox(),
               ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PokemonInfoTitle extends StatelessWidget {
-  final String title;
-  const _PokemonInfoTitle({
-    Key? key, 
-    required this.title,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height*0.03,
-        top: MediaQuery.of(context).size.height*0.02,
-      ),
-      child: Row(
-        children: [
-          Text(title, 
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
             ),
           ),
         ],
