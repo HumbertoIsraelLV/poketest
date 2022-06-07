@@ -93,13 +93,18 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
             ),
-            Positioned(
-              right: MediaQuery.of(context).size.width*0.06,
-              top: MediaQuery.of(context).size.height*0.1,
-              child: IconButton(
-                color: Colors.black,
-                onPressed: () => Navigator.pushNamed(context, 'teams'),
-                icon: const Icon(Icons.groups),
+            BlocBuilder<PokemonBloc, PokemonState>(
+              builder: (context, state) => 
+              Positioned(
+                right: MediaQuery.of(context).size.width*0.06,
+                top: MediaQuery.of(context).size.height*0.1,
+                child: IconButton(
+                  color: Colors.black,
+                  onPressed: (state.pokemonData==null)
+                  ?null 
+                  :() => Navigator.pushNamed(context, 'teams'),
+                  icon: const Icon(Icons.groups),
+                ),
               ),
             ),
             Positioned(
@@ -158,10 +163,15 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey,
-        child: const Icon(Icons.group_add),
-        onPressed: ()=>Navigator.pushNamed(context, 'create_team'),
+      floatingActionButton: BlocBuilder<PokemonBloc, PokemonState>(
+        builder: (context, state) => 
+        FloatingActionButton(
+          backgroundColor: Colors.grey,
+          onPressed: (state.pokemonData==null)
+          ?null
+          :()=>Navigator.pushNamed(context, 'create_team'),
+          child: const Icon(Icons.group_add),
+        ),
       ),
     );
   }

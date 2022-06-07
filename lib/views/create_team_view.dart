@@ -96,7 +96,7 @@ class CreateTeamViewState extends State<CreateTeamView> {
           ],
         ),
       ),
-      floatingActionButton: (controller.value.amount==3)
+      floatingActionButton: (controller.value.amount==6)
       ?FloatingActionButton(
         backgroundColor: Colors.grey,
         child: const Icon(Icons.save),

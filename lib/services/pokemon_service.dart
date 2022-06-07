@@ -16,6 +16,13 @@ class PokemonService {
     'water': Colors.blue[300]!,
     'grass': Colors.green[300]!,
     'bug': Colors.green[300]!,
+    'poison': Colors.purple[300]!,
+    'ghost': Colors.purple[300]!,
+    'psychic': Colors.yellow[700]!,
+    'electric': Colors.yellow[700]!,
+    'ground': Colors.brown[300]!,
+    'fighting': Colors.brown[300]!,
+    'fairy': Colors.pink[300]!,
   };
 
   static Future<PokemonModel?> readPokemonById(int id) async {
@@ -33,7 +40,7 @@ class PokemonService {
   static Future<List<PokemonModel>> readPokemonData() async {
     try {
       List<PokemonModel> pokemonList = [];
-      for (var i = 1; i <= 4; i++) {
+      for (var i = 1; i <= 150; i++) {
         final auxPokemon = await readPokemonById(i);
         if(auxPokemon!=null) pokemonList.add(auxPokemon);
       }
