@@ -1,14 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:poketest/bloc/blocs.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
-
-import '../services/services.dart';
-import 'show_update_name_alert.dart';
 
 showCreateTeamAlert(BuildContext context, DragSelectGridViewController gridController) async {
   final formKey = GlobalKey<FormBuilderState>();
@@ -56,10 +52,11 @@ showCreateTeamAlert(BuildContext context, DragSelectGridViewController gridContr
                     onPressed: () async {
                       formKey.currentState!.save();
                       if (formKey.currentState!.validate()) {
-                        if(PokemonService.teamsIds.isEmpty) await PokemonService.readPokemonTeamsIds();
-                        final prefs = await SharedPreferences.getInstance();
-                        PokemonService.teamsIds[formKey.currentState!.value['name']]=gridController.value.selectedIndexes.map((item) => item+1).toList();
-                        await prefs.setString('teams', json.encode(PokemonService.teamsIds));
+                        final pokemonTeamsBloc = BlocProvider.of<PokemonTeamsBloc>(context, listen: false);
+                        pokemonTeamsBloc.add(UpdatePokemonTeamsData({}
+                          ..addAll(pokemonTeamsBloc.state.teamsIds!)
+                          ..addAll({formKey.currentState!.value['name']: gridController.value.selectedIndexes.map((item) => item+1).toList()})
+                        ));
                         Future.microtask(() => Navigator.of(context).popUntil(ModalRoute.withName('create_team')));
                         Future.microtask(() async {
                           await Future.delayed(const Duration(
@@ -76,8 +73,6 @@ showCreateTeamAlert(BuildContext context, DragSelectGridViewController gridContr
                             )
                           ));
                         });
-                      } else {
-                        print("validation failed");
                       }
                     },
                     child: const Text('Create'),

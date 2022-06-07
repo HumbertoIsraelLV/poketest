@@ -118,10 +118,9 @@ class _HomeViewState extends State<HomeView> {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height*0.75,
                 width: MediaQuery.of(context).size.width,
-                child: FutureBuilder(
-                  future: PokemonService.readPokemon(),
-                  builder: (context, AsyncSnapshot<List<PokemonModel>>snapshot){
-                    if(!snapshot.hasData){
+                child: BlocBuilder<PokemonBloc, PokemonState>(
+                  builder: (context, state){
+                    if(state.pokemonData==null){
                       return Center(
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height*0.06,
@@ -134,7 +133,7 @@ class _HomeViewState extends State<HomeView> {
                     }
                     return GridView.builder(
                       physics: const BouncingScrollPhysics(),
-                      itemCount: snapshot.data!.length,
+                      itemCount: state.pokemonData!.length,
                       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                         childAspectRatio: 1.4,
                         mainAxisSpacing: 10,
@@ -148,7 +147,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       itemBuilder: (context, index){
                         return _PokemonCard(
-                          pokemon: snapshot.data![index],
+                          pokemon: state.pokemonData![index],
                           index: index+1,
                         );
                       },

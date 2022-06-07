@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/blocs.dart';
 import '../services/services.dart';
 import '../models/models.dart';
 import '../components/components.dart';
@@ -61,25 +63,13 @@ class CreateTeamViewState extends State<CreateTeamView> {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height*0.85,
                 width: MediaQuery.of(context).size.width,
-                child: FutureBuilder(
-                  future: PokemonService.readPokemon(),
-                  builder: (context, AsyncSnapshot<List<PokemonModel>>snapshot){
-                    if(!snapshot.hasData){
-                      return Center(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height*0.06,
-                          width: MediaQuery.of(context).size.height*0.06,
-                          child: const CircularProgressIndicator(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      );
-                    }
+                child: BlocBuilder<PokemonBloc, PokemonState>(
+                  builder: (context, state){
                     return DragSelectGridView(
                       triggerSelectionOnTap: true,
                       gridController: controller,
                       physics: const BouncingScrollPhysics(),
-                      itemCount: snapshot.data!.length,
+                      itemCount: state.pokemonData!.length,
                       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                         childAspectRatio: 1.4,
                         mainAxisSpacing: 10,
@@ -93,7 +83,7 @@ class CreateTeamViewState extends State<CreateTeamView> {
                       ),
                       itemBuilder: (context, index, selected){
                         return _PokemonCard(
-                          pokemon: snapshot.data![index],
+                          pokemon: state.pokemonData![index],
                           index: index+1,
                           selected: selected,
                         );

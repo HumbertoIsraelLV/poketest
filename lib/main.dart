@@ -16,8 +16,15 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<UserBloc>(
-      create: (BuildContext context) => UserBloc(),
-    ),
+          create: (BuildContext context) => UserBloc(),
+        ),
+        BlocProvider<PokemonBloc>(
+          create: (BuildContext context) => PokemonBloc()..add(ReadPokemonData()),
+        ),
+        BlocProvider<PokemonTeamsBloc>(
+          lazy: false,
+          create: (BuildContext context) => PokemonTeamsBloc()..add(ReadPokemonTeamsData()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

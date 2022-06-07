@@ -2,18 +2,19 @@ part of 'pokemon_bloc.dart';
 
 @immutable
 abstract class PokemonState {
-  final Map<String, List<int>> teamsIds;
+  final List<PokemonModel>? pokemonData;
 
   const PokemonState({
-    required this.teamsIds 
+    this.pokemonData, 
   });
 }
 
 class PokemonInitial extends PokemonState {
-  PokemonInitial(): super(teamsIds: {});
+  const PokemonInitial(): super();
 }
 
 class PokemonUpdated extends PokemonState {
-  final Map<String, List<int>> updatedTeamsIds;
-  const PokemonUpdated( this.updatedTeamsIds) : super(teamsIds: updatedTeamsIds);
+  final List<PokemonModel> updatedPokemonData;
+  const PokemonUpdated( this.updatedPokemonData) 
+    : super(pokemonData: updatedPokemonData);
 }

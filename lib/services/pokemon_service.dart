@@ -23,14 +23,11 @@ class PokemonService {
     'grass': Colors.green[300]!,
     'bug': Colors.green[300]!,
   };
-  
+
   static Future<PokemonModel?> readPokemonById(int id) async {
-    if(pokemonData.containsKey(id)) return pokemonData[id];
     try {
       final response = await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon/$id/'));
       if(response.statusCode==200){
-        final auxPokemon = pokemonModelFromJson(response.body);
-        pokemonData[id]=auxPokemon;
         return pokemonModelFromJson(response.body);
       }
     } catch (e) {
@@ -39,7 +36,7 @@ class PokemonService {
     return null;
   }
 
-  static Future<List<PokemonModel>> readPokemon() async {
+  static Future<List<PokemonModel>> readPokemonData() async {
     try {
       List<PokemonModel> pokemonList = [];
       for (var i = 1; i <= 4; i++) {
@@ -53,18 +50,19 @@ class PokemonService {
     return [];
   }
 
-  static Future<Map<String, List<PokemonModel>>> readPokemonTeamsIds() async {
+  static Future<Map<String, List<int>>> readPokemonTeamsIds() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final auxTeams = json.decode(prefs.getString('teams')?? '{}');
+      final Map<String, List<int>> auxTeamsIds = {}; 
       for (var teamName in auxTeams.keys) {
         List<int> teamIds = [];
         for(var id in auxTeams[teamName]){
           teamIds.add(int.parse(id.toString()));
         }
-        teamsIds[teamName]=teamIds;
+        auxTeamsIds[teamName]=teamIds;
       }
-      return {};
+      return auxTeamsIds;
     } catch (e) {
       log(e.toString());
     }

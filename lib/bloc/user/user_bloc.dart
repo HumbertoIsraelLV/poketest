@@ -2,6 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+import '../../services/services.dart';
+
 part 'user_event.dart';
 part 'user_state.dart';
 

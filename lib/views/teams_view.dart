@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poketest/bloc/blocs.dart';
 import 'package:poketest/services/services.dart';
 
 import '../models/models.dart';
@@ -44,21 +46,9 @@ class TeamsView extends StatelessWidget {
               ),
             ),
           ),
-          FutureBuilder(
-            future: PokemonService.readPokemonTeamsData(),
-            builder: (context, AsyncSnapshot<Map<String, List<PokemonModel>>>snapshot){
-              if(!snapshot.hasData){
-                return Center(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height*0.06,
-                    width: MediaQuery.of(context).size.height*0.06,
-                    child: const CircularProgressIndicator(
-                      color: Colors.grey,
-                    ),
-                  ),
-                );
-              }
-              if(snapshot.data!.isEmpty){
+          BlocBuilder<PokemonTeamsBloc, PokemonTeamsState>(
+            builder: (context, state){
+              if(state.teamsIds!.isEmpty){
                 return const Center(
                   child: Text('No teams stored',
                     style: TextStyle(
@@ -69,12 +59,12 @@ class TeamsView extends StatelessWidget {
               }
               return ListView.builder(
                 physics: const BouncingScrollPhysics(),
-                itemCount: snapshot.data!.entries.length,
+                itemCount: state.teamsIds!.entries.length,
                 itemBuilder: ((context, index) {
                   return _TeamsListTile(
                     index: index,
-                    teamName: snapshot.data!.keys.elementAt(index),
-                    teamData: snapshot.data!.values.elementAt(index),
+                    teamName: state.teamsIds!.keys.elementAt(index),
+                    teamIds: state.teamsIds!.values.elementAt(index),
                   );
                 }),
               );
@@ -88,12 +78,12 @@ class TeamsView extends StatelessWidget {
 
 class _TeamsListTile extends StatelessWidget {
   final int index;
-  final List<PokemonModel> teamData;
+  final List<int> teamIds;
   final String teamName;
   const _TeamsListTile({
     Key? key, 
     required this.index, 
-    required this.teamData,
+    required this.teamIds,
     required this.teamName,
   }) : super(key: key);
 
@@ -123,7 +113,10 @@ class _TeamsListTile extends StatelessWidget {
       key: Key(teamName),
       direction: DismissDirection.startToEnd,
       onDismissed: (direction) async {
-        await PokemonService.deletePokemonTeam(teamName);
+        final pokemonTeamsBloc = BlocProvider.of<PokemonTeamsBloc>(context, listen: false);
+        Map<String, List<int>> auxTeamsIds = {}..addAll(pokemonTeamsBloc.state.teamsIds!);
+        auxTeamsIds.remove(teamName);
+        pokemonTeamsBloc.add(UpdatePokemonTeamsData(auxTeamsIds));
       },
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -151,24 +144,25 @@ class _TeamsListTile extends StatelessWidget {
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
-              itemCount: teamData.length,
+              itemCount: teamIds.length,
               itemBuilder: (context, teamDataIndex){
+                final pokemonBloc = BlocProvider.of<PokemonBloc>(context, listen: false);
                 return ListTile(
-                  title: Text('#${index+1} / #${teamDataIndex+1} - ${teamData[teamDataIndex].name}',
+                  title: Text('#${index+1} / #${teamDataIndex+1} - ${pokemonBloc.state.pokemonData![teamDataIndex].name}',
                     style: const TextStyle(
                       color: Colors.black,
                     ),
                     softWrap: true, 
                   ),
                   onTap: (){
-                    PokemonService.currentPokemon=teamData[teamDataIndex];
+                    PokemonService.currentPokemon=pokemonBloc.state.pokemonData![teamDataIndex];
                     Navigator.pushNamed(context, 'pokemon');
                   },
                   trailing: SizedBox(
                     height: 30,
                     width: 30,
                     child: CachedNetworkImage(
-                      imageUrl: 'https://cdn.traction.one/pokedex/pokemon/${teamData[teamDataIndex].id}.png',
+                      imageUrl: 'https://cdn.traction.one/pokedex/pokemon/${pokemonBloc.state.pokemonData![teamDataIndex].id}.png',
                     ),
                   ),
                 );
