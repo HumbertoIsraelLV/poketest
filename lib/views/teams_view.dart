@@ -4,6 +4,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/blocs.dart';
+import '../global/urls.dart';
 import '../services/services.dart';
 
 class TeamsView extends StatelessWidget {
@@ -161,7 +162,8 @@ class _TeamsListTile extends StatelessWidget {
                     height: 30,
                     width: 30,
                     child: CachedNetworkImage(
-                      imageUrl: 'https://cdn.traction.one/pokedex/pokemon/${pokemonBloc.state.pokemonData![teamIds[teamDataIndex]-1].id}.png',
+
+                      imageUrl: "${Urls.imagesServer}${pokemonBloc.state.pokemonData![teamIds[teamDataIndex]-1].id}.png",
                     ),
                   ),
                 );

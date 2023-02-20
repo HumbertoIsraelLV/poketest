@@ -7,6 +7,7 @@ import '../bloc/blocs.dart';
 import '../components/components.dart';
 import '../models/models.dart';
 import '../services/services.dart';
+import '../global/urls.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -393,7 +394,7 @@ class _PokemonCardImage extends StatelessWidget {
       height: 70,
       width: 70,
       child: CachedNetworkImage(
-        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$index.png'
+        imageUrl: "${Urls.imagesServer}$index.png"
       ),
     );
   }

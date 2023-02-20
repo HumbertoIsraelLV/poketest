@@ -29,6 +29,7 @@ class SelectionAppBar extends StatelessWidget implements PreferredSizeWidget {
           Tooltip(
             triggerMode: TooltipTriggerMode.tap,
             message: 'Select six of them to create a team.',
+            showDuration: Duration(seconds: 5),
             child: IconButton(
               disabledColor: Colors.white,
               onPressed: null,

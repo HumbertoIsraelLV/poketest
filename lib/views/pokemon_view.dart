@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../global/urls.dart';
 import '../services/services.dart';
 
 class PokemonView extends StatelessWidget {
@@ -73,7 +74,8 @@ class PokemonView extends StatelessWidget {
                 height: MediaQuery.of(context).size.height*0.25,
                 width: MediaQuery.of(context).size.height*0.25,
                 child: CachedNetworkImage(
-                  imageUrl: 'https://cdn.traction.one/pokedex/pokemon/${PokemonService.currentPokemon.id}.png'
+                  // imageUrl: 'https://cdn.traction.one/pokedex/pokemon/${PokemonService.currentPokemon.id}.png'
+                  imageUrl: "${Urls.imagesServer}${PokemonService.currentPokemon.id}.png"
                 ),
               ),
             ),

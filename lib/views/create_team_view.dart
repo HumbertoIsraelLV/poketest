@@ -4,6 +4,7 @@ import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/blocs.dart';
+import '../global/urls.dart';
 import '../services/services.dart';
 import '../models/models.dart';
 import '../components/components.dart';
@@ -325,7 +326,7 @@ class _PokemonCardImage extends StatelessWidget {
       height: 70,
       width: 70,
       child: CachedNetworkImage(
-        imageUrl: 'https://cdn.traction.one/pokedex/pokemon/$index.png'
+        imageUrl: "${Urls.imagesServer}$index.png",
       ),
     );
   }
