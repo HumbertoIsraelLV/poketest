@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        title: 'Poketest',
         debugShowCheckedModeBanner: false,
         routes: {
           'home'        :(context) => const HomeView(),

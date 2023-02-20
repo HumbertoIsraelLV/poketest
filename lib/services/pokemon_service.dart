@@ -40,7 +40,7 @@ class PokemonService {
   static Future<List<PokemonModel>> readPokemonData() async {
     try {
       List<PokemonModel> pokemonList = [];
-      for (var i = 1; i <= 150; i++) {
+      for (var i = 1; i <= 30; i++) {
         final auxPokemon = await readPokemonById(i);
         if(auxPokemon!=null) pokemonList.add(auxPokemon);
       }

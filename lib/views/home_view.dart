@@ -393,7 +393,7 @@ class _PokemonCardImage extends StatelessWidget {
       height: 70,
       width: 70,
       child: CachedNetworkImage(
-        imageUrl: 'https://cdn.traction.one/pokedex/pokemon/$index.png'
+        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$index.png'
       ),
     );
   }
